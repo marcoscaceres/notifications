@@ -83,8 +83,8 @@ initially false. When true, indicates that the end user should be alerted after 
 an existing notification.
 
 <p>A <a>notification</a> has an associated
-<dfn for=notification id=silent-preference-flag>silent preference</dfn> boolean, which is initially
-false. When true, indicates that no sounds or vibrations should be made.
+<dfn for=notification id=silent-preference-flag>silent preference</dfn> boolean.
+When true, indicates that no sounds or vibrations should be made.
 
 <p>A <a>notification</a> has an associated
 <dfn for=notification id=require-interaction-preference-flag>require interaction preference</dfn>
@@ -232,8 +232,12 @@ string <var>title</var>, {{NotificationOptions}} <a for=/>dictionary</a> <var>op
  <li><p>Set <var>notification</var>'s <a for=notification>renotify preference</a> to
  <var>options</var>["{{NotificationOptions/renotify}}"].
 
- <li><p>Set <var>notification</var>'s <a for=notification>silent preference</a> to
+ <li><p>If <var>options</var>["{{NotificationOptions/silent}}"] is present, set
+ <var>notification</var>'s <a for=notification>silent preference</a> to
  <var>options</var>["{{NotificationOptions/silent}}"].
+ Otherwise, set <var>notification</var>'s <a for=notification>silent preference</a> to
+ the boolean value that represents the opposite of the OS's default preference
+ for playing notification sounds.</p></li>
 
  <li><p>Set <var>notification</var>'s <a for=notification>require interaction preference</a> to
  <var>options</var>["{{NotificationOptions/requireInteraction}}"].
@@ -635,7 +639,7 @@ dictionary NotificationOptions {
   VibratePattern vibrate;
   EpochTimeStamp timestamp;
   boolean renotify = false;
-  boolean silent = false;
+  boolean silent;
   boolean requireInteraction = false;
   any data = null;
   sequence&lt;NotificationAction> actions = [];
